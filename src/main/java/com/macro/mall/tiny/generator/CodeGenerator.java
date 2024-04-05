@@ -131,6 +131,14 @@ public class CodeGenerator {
                         .enableHyphenStyle()
                          // 开启驼峰转连字符
                         .enableFileOverride()
+                             // 实体文件覆盖
+                        .entityBuilder().enableFileOverride()
+                        // Mapper文件覆盖
+                        .mapperBuilder().enableFileOverride()
+                        // Service文件覆盖
+                        .serviceBuilder().enableFileOverride()
+                        // Controller文件覆盖
+                        .controllerBuilder().enableFileOverride()
                         .build()
                 )
 
