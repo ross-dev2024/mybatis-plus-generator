@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.SysPkgMapper">
+    <resultMap id="BaseResultMap" type="com.domain.PkgEntity">
+        <!--@Table sys_pkg-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="treePath" column="tree_path" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="pkgType" column="pkg_type" jdbcType="VARCHAR"/>
+        <result property="location" column="location" jdbcType="VARCHAR"/>
+        <result property="sendDate" column="send_date" jdbcType="TIMESTAMP"/>
+        <result property="toDate" column="to_date" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        name,
+        parent_id,
+        tree_path,
+        sort,
+        status,
+        pkg_type,
+        location,
+
+        send_date,
+        to_date,
+        deleted,
+        create_time,
+        update_time
+    </sql>
+
+    <!--查询单个-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_pkg
+        where id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select id,
+               name,
+               parent_id,
+               tree_path,
+               sort,
+               status,
+               pkg_type,
+               location,
+
+               send_date,
+               to_date,
+               deleted,
+               create_time,
+               update_time
+
+
+        from youlai_system.sys_pkg
+    </select>
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sys_pkg
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+            <if test="treePath != null and treePath != ''">
+                and tree_path = #{treePath}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="pkgType != null and pkgType != ''">
+                and pkg_type = #{pkgType}
+            </if>
+            <if test="location != null and location != ''">
+                and location = #{location}
+            </if>
+            <if test="sendDate != null">
+                and send_date = #{sendDate}
+            </if>
+            <if test="toDate != null">
+                and to_date = #{toDate}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_pkg(name, parent_id, tree_path, sort, status, pkg_type, location, send_date, to_date, deleted,
+        create_time, update_time)
+        values (#{name}, #{parentId}, #{treePath}, #{sort}, #{status}, #{pkgType}, #{location}, #{sendDate}, #{toDate},
+        #{deleted}, #{createTime}, #{updateTime})
+    </insert>
+
+
+    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_pkg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="treePath != null and treePath != ''">
+                tree_path,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="pkgType != null and pkgType != ''">
+                pkg_type,
+            </if>
+            <if test="location != null and location != ''">
+                location,
+            </if>
+            <if test="sendDate != null">
+                send_date,
+            </if>
+            <if test="toDate != null">
+                to_date,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="parentId != null">
+                #{parentId},
+            </if>
+            <if test="treePath != null and treePath != ''">
+                #{treePath},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="pkgType != null and pkgType != ''">
+                #{pkgType},
+            </if>
+            <if test="location != null and location != ''">
+                #{location},
+            </if>
+            <if test="sendDate != null">
+                #{sendDate},
+            </if>
+            <if test="toDate != null">
+                #{toDate},
+            </if>
+            <if test="deleted != null">
+                #{deleted},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_pkg(name, parent_id, tree_path, sort, status, pkg_type, location, send_date, to_date, deleted,
+        create_time, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.parentId}, #{entity.treePath}, #{entity.sort}, #{entity.status},
+            #{entity.pkgType}, #{entity.location}, #{entity.sendDate}, #{entity.toDate}, #{entity.deleted},
+            #{entity.createTime}, #{entity.updateTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_pkg(name, parent_id, tree_path, sort, status, pkg_type, location, send_date, to_date, deleted,
+        create_time, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.parentId}, #{entity.treePath}, #{entity.sort}, #{entity.status},
+            #{entity.pkgType}, #{entity.location}, #{entity.sendDate}, #{entity.toDate}, #{entity.deleted},
+            #{entity.createTime}, #{entity.updateTime})
+        </foreach>
+        on duplicate key update
+        name = values(name),
+        parent_id = values(parent_id),
+        tree_path = values(tree_path),
+        sort = values(sort),
+        status = values(status),
+        pkg_type = values(pkg_type),
+        location = values(location),
+        send_date = values(send_date),
+        to_date = values(to_date),
+        deleted = values(deleted),
+        create_time = values(create_time),
+        update_time = values(update_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_pkg
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="treePath != null and treePath != ''">
+                tree_path = #{treePath},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="pkgType != null and pkgType != ''">
+                pkg_type = #{pkgType},
+            </if>
+            <if test="location != null and location != ''">
+                location = #{location},
+            </if>
+            <if test="sendDate != null">
+                send_date = #{sendDate},
+            </if>
+            <if test="toDate != null">
+                to_date = #{toDate},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sys_pkg where id = #{id}
+    </delete>
+</mapper>
+
